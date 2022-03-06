@@ -1,0 +1,59 @@
+#!/usr/bin/python3
+import os
+import random_wallpapers
+import sys
+import argparse
+
+
+def clear_file(input_recent_file):
+    wallpaper = random_wallpapers.RandomWallpapers(None, input_recent_file)
+    wallpaper.create_wallpaper_file()
+
+
+def change_wallpaper(input_wallpaper_directory, input_recent_file):
+    wallpaper = random_wallpapers.RandomWallpapers(input_wallpaper_directory, input_recent_file)
+    wallpaper.get_recent_wallpapers()
+    wallpaper.remove_recent_wallpapers()
+    wallpaper.set_random_wallpaper()
+
+
+# Initialize parser
+parser = argparse.ArgumentParser()
+# subparsers = parser.add_subparsers(dest='command')
+# install = subparsers.add_parser('install', help='initialize the files and directories')
+# change = subparsers.add_parser('change', help='randomly change the wallpaper')
+group = parser.add_argument_group("Change Wallpaper")
+
+# group = parser.add_mutually_exclusive_group()
+parser.add_argument("-c", "--create",
+                    help="Create recent wallpapers file, you must pass the full path to the recents file."
+                         " This will also clear the file if it exists.",
+                    metavar="PATH")
+
+group.add_argument("-w", "--wallpaper", help="A full filepath to the wallpapers directory, the path must end in /",
+                   metavar="PATH")
+
+group.add_argument("-r", "--recent", help="The full path to a desired file to contain the recent wallpapers."
+                                          " If the file does not exist, one will be created"
+                                          " in the same folder as this python script.", metavar="PATH",
+                   default=os.getcwd() + "/recents.txt")
+
+# change.add_argument("-r",
+#                     help="manually specify a recents file path. If none is specified then the default recents.txt "
+#                          "file will be used",
+#                     default=os.getcwd() + "/recents.txt")
+
+# Read arguments from command line
+args = parser.parse_args(args=None if sys.argv[1:] else ['--help'])
+
+if args.create:
+    clear_file(args.create)
+
+if args.wallpaper:
+    # wallpaper_directory = str(args.wallpaper)
+    # recent_file = str(args.recent)
+    # clear_file(args.recent)
+    change_wallpaper(args.wallpaper, args.recent)
+#
+# if args.change:
+#     change_wallpaper()

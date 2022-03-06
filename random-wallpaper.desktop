@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.1
+Type=Application
+Name=Random Wallpaper Changer
+Comment=Randomize your wallpaper
+Icon=preferences-desktop-wallpaper-symbolic
+Exec=random-wallpaper-forwarder
+Actions=
+Categories=X-GNOME-Utilities;
